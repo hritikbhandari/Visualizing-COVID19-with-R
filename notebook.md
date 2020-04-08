@@ -157,12 +157,11 @@ run_tests({
 
 
 ## 2. Confirmed cases throughout the world
-<p>The table above shows the cumulative confirmed cases of COVID-19 worldwide by date. Just reading numbers in a table makes it hard to get a sense of the scale and growth of the outbreak. Let's draw a line plot to visualize the confirmed cases worldwide.</p>
+<p>The table above shows the cumulative confirmed cases of COVID-19 worldwide by date. Just reading numbers in a table makes it hard to get a sense of the scale and growth of the outbreak. So, let's visualize the confirmed cases worldwide.</p>
 
 
 ```R
-# Draw a line plot of cumulative cases vs. date
-# Label the y-axis
+# Drawing a line plot of cumulative cases vs. date
 ggplot(confirmed_cases_worldwide, aes(date, cum_cases)) +
   geom_line() +
     ylab("Cumulative confirmed cases")
@@ -468,7 +467,7 @@ who_events <- tribble(
   mutate(date = as.Date(date))
 
 # Using who_events, add vertical dashed lines with an xintercept at date
-# and text at date, labeled by event, and at 100000 on the y-axis
+
 plt_cum_confirmed_cases_china_vs_world +
   geom_vline(aes(xintercept = date), data =who_events, linetype= "dashed") +
   geom_text(aes(x = date, label =event), data = who_events, y =1e5)
@@ -576,12 +575,11 @@ run_tests({
 
 
 ```R
-# Filter for China, from Feb 15
+# Filtering for China, from Feb 15
 china_after_feb15 <- confirmed_cases_china_vs_world %>%
   filter(is_china=="China", date>="2020-02-15")
 
 # Using china_after_feb15, draw a line plot cum_cases vs. date
-# Add a smooth trend line using linear regression, no error bars
 ggplot(china_after_feb15, aes(date, cum_cases)) +
   geom_line() +
   geom_smooth(method = "lm",se =FALSE) +
@@ -689,18 +687,17 @@ run_tests({
 
 
 ```R
-# Filter confirmed_cases_china_vs_world for not China
+# Filtering confirmed_cases_china_vs_world for not China
 not_china <- confirmed_cases_china_vs_world %>%
     filter(is_china =="Not China")
 
 # Using not_china, draw a line plot cum_cases vs. date
-# Add a smooth trend line using linear regression, no error bars
 plt_not_china_trend_lin <- ggplot(not_china, aes(date, cum_cases)) +
   geom_line() +
   geom_smooth(method="lm", se=FALSE) +
   ylab("Cumulative confirmed cases")
 
-# See the result
+
 plt_not_china_trend_lin 
 ```
 
@@ -856,7 +853,7 @@ run_tests({
 
 
 ```R
-# Run this to get the data for each country
+
 confirmed_cases_by_country <- read_csv("datasets/confirmed_cases_by_country.csv")
 
 glimpse(confirmed_cases_by_country)
@@ -867,7 +864,7 @@ top_countries_by_total_cases <- confirmed_cases_by_country %>%
   summarize(total_cases = max(cum_cases)) %>%
   top_n(7, total_cases)
 
-# See the result
+
 top_countries_by_total_cases
 ```
 
@@ -941,14 +938,13 @@ run_tests({
 
 
 ```R
-# Run this to get the data for the top 7 countries
+# Getting the data for the top 7 countries
 confirmed_cases_top7_outside_china <- read_csv("datasets/confirmed_cases_top7_outside_china.csv")
 glimpse(confirmed_cases_top7_outside_china)
 
 # 
 
-# Using confirmed_cases_top7_outside_china, draw a line plot of
-# cum_cases vs. date, grouped and colored by country
+# Using confirmed_cases_top7_outside_china,
 ggplot(confirmed_cases_top7_outside_china, aes(date,cum_cases, colour = country, group =country))+
 geom_line()+
 ylab("Cumulative confirmed cases")
