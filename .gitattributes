@@ -1,2 +1,2 @@
-*.jupyter linguist-detectable=false
+*.Jupyter Notebook linguist-detectable=false
 *.js linguist-detectable=true
